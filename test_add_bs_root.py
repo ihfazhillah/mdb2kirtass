@@ -22,6 +22,7 @@ class AddRootBsTestCase(unittest.TestCase):
     def test_add_root(self):
         changed = add_root(StringIO(self.original_group_string()), 'new')
         self.assertIn(b'new', etree.tostring(changed))
+        self.assertIn(b'0', etree.tostring(changed))
 
     def test_add_root_twice(self):
         changed = add_root(StringIO(self.original_group_string()), 'abc')
