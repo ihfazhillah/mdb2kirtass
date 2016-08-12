@@ -30,6 +30,12 @@ class AddRootBsTestCase(unittest.TestCase):
         self.assertIn(b'abc', etree.tostring(changed))
         self.assertIn(b'2', etree.tostring(changed))
 
+    def test_add_root_with_prefix_id(self):
+        changed = add_root(StringIO(self.original_group_string()),
+                  'abc', 'bs')
+        self.assertIn(b'abc', etree.tostring(changed))
+        self.assertIn(b'bs2', etree.tostring(changed))
+
 
 
 
