@@ -2,7 +2,7 @@ import unittest
 from lxml import etree
 from io import StringIO
 
-from add_root import add_root
+from mdb2kirtass.add_root import add_root
 
 class AddRootBsTestCase(unittest.TestCase):
 
