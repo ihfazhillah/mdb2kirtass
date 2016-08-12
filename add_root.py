@@ -1,7 +1,7 @@
 from lxml import etree
 
 
-def add_root(original, name_id):
+def add_root(original, name):
     """Menambahkan root dari xml objek berupa original, dengan
     data name_id yang berupa dictionary objek
         name = nama
@@ -13,9 +13,14 @@ def add_root(original, name_id):
 
     tree = etree.parse(original)
     setting = tree.getroot()
-    root = setting.find('.//root')
-    if not tree.find('.//root[Name="{}"]'.format(name_id['name'])):
-        new = etree.SubElement(setting, 'root', {'name': name_id['name'],
-                                                'id':name_id['id']})
+    root = root = tree.find('.//root[@Name="{}"]'.format(name))
+    if root is not None:
+        root_len = len(root)
+        id_ = root_len + 1
+        new = etree.SubElement(setting, 'root', {'name': name,
+                                                'id': str(id_)})
+    else:
+        new = etree.SubElement(setting, 'root', {'name': name,
+        'id':'0'})
 
-    return new
+    return tree
