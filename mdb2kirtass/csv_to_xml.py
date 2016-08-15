@@ -16,3 +16,6 @@ class CsvtoXml(object):
     def _dict_csv(self):
         """Fungsi untuk mengubah file csv ke objek DictCsvReader"""
         return csv.DictReader(self.csv_file)
+
+    def _make_xml_original(self):
+        pass
