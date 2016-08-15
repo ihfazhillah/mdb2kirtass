@@ -19,3 +19,8 @@ class CsvtoXml(object):
 
     def _make_xml_original(self):
         pass
+
+
+    def _get_header(self):
+        csv_object = csv.reader(self.csv_file)
+        return next(csv_object)
