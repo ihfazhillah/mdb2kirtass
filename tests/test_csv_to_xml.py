@@ -19,3 +19,15 @@ sidu,3,kertas putih,4,3""".strip())
                     betaka='ini buku bagus', authno='1', cat='3')
         hasil = CsvtoXml(self.original_csv_file())
         self.assertEqual(data, list(hasil._dict_csv())[0])
+
+    def test_buat_xml_file_dengan_tag_header_text_isi(self):
+        """header csv adalah tag, dan isi adalah text tanpa
+        ada perubahan nama"""
+        hasil = CsvtoXml(self.original_csv_file)
+        expected = """<item><bk>nama</bk><no>1</no><betaka>ini buku bagus</betaka><authno>1</authno><cat>1</cat>
+        <bk>munawir</bk><no>2</no><betaka>kamus indo arab</betaka><authno>2</authno><cat>4</cat>
+        <bk>sidu</bk><no>3</no><betaka>kertas putih</betaka><authno>4</authno><cat>3</cat>
+        </item>"""
+        expected_xml = etree.fromstring(expected)
+        self.assertEqual(etree.tostring(expected_xml),
+                        etree.tostring(expected._make_xml_original))
