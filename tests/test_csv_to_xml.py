@@ -30,7 +30,7 @@ sidu,3,kertas putih,4,3""".strip())
         </item>"""
         expected_xml = etree.fromstring(expected)
         self.assertEqual(etree.tostring(expected_xml),
-                        etree.tostring(expected._make_xml_original))
+                        etree.tostring(hasil._make_xml_original()))
 
     def test_get_headers(self):
         """Mendapatkan header csv"""
