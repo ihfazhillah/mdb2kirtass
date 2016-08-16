@@ -53,3 +53,13 @@ sidu,3,kertas putih,4,3""".strip())
         <book><bk>sidu</bk><no>3</no><betaka>kertas putih</betaka><authno>4</authno><cat>3</cat></book>
         </custom>"""
         self.assertXmlEqual(expected, hasil)
+
+    def test_buat_xml_objek_tapi_colom_tag_diubah_satu(self):
+        hasil = CsvtoXml(self.original_csv_file())._make_xml_original(parent='book',
+                col_name=[('bk', 'b')])
+        expected = """<item>
+        <book><b>nama</b><no>1</no><betaka>ini buku bagus</betaka><authno>1</authno><cat>3</cat></book>
+        <book><b>munawir</b><no>2</no><betaka>kamus indo arab</betaka><authno>2</authno><cat>4</cat></book>
+        <book><b>sidu</b><no>3</no><betaka>kertas putih</betaka><authno>4</authno><cat>3</cat></book>
+        </item>"""
+        self.assertXmlEqual(expected, hasil)
