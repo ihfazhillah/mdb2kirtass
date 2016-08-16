@@ -18,9 +18,14 @@ class CsvtoXml(object):
         return csv.DictReader(self.csv_file)
 
     def _make_xml_original(self):
-        pass
+        item = etree.Element("item")
+        for row in self._dict_csv():
+            for col in row:
+                t = etree.SubElement(item, col)
+                t.text = row[col]
 
+        return item
 
     def _get_header(self):
-        csv_object = csv.reader(self.csv_file)
-        return next(csv_object)
+        csv_object = list(csv.reader(self.csv_file))
+        return csv_object
