@@ -22,9 +22,19 @@ class CsvtoXml(object):
         # if col_name is None:
         for row in self._dict_csv():
             if not parent:
-                for col in row:
-                    t = etree.SubElement(item, col)
-                    t.text = row[col]
+                if col_name is None:
+                    for col in row:
+                        t = etree.SubElement(item, col)
+                        t.text = row[col]
+                else:
+                    for col in row:
+                        for cn in col_name:
+                            if col == cn[0]:
+                                col = cn
+                            else:
+                                col = (col, col)
+                        t = etree.SubElement(item, col[1])
+                        t.text = row[col[0]]
             else:
                 p = etree.SubElement(item, parent)
                 if col_name is None:
