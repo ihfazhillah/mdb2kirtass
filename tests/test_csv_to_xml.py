@@ -31,4 +31,14 @@ sidu,3,kertas putih,4,3""".strip())
         </item>"""
         self.assertXmlEqual(expected,
                     hasil._make_xml_original())
-        
+
+    def test_buat_xml_objek_dengan_tag_header_setiap_row_dengan_parent(self):
+        """header csv adalah tag, setiap baris ada tag parent, dengan root
+        adalah item, tanpa ada perubahan nama"""
+        hasil = CsvtoXml(self.original_csv_file())._make_xml_original(parent='book')
+        expected = """<item>
+        <book><bk>nama</bk><no>1</no><betaka>ini buku bagus</betaka><authno>1</authno><cat>3</cat></book>
+        <book><bk>munawir</bk><no>2</no><betaka>kamus indo arab</betaka><authno>2</authno><cat>4</cat></book>
+        <book><bk>sidu</bk><no>3</no><betaka>kertas putih</betaka><authno>4</authno><cat>3</cat></book>
+        </item>"""
+        self.assertXmlEqual(expected, hasil)
