@@ -19,36 +19,41 @@ class CsvtoXml(object):
 
     def _make_xml_original(self, root='item', parent=None, col_name=None):
         item = etree.Element(root)
-        # if col_name is None:
         for row in self._dict_csv():
-            if not parent:
+            if parent is None:
                 if col_name is None:
-                    for col in row:
-                        t = etree.SubElement(item, col)
-                        t.text = row[col]
+                    self._make_tag_with_parent_from_row(row, item)
                 else:
-                    for col in row:
-                        for cn in col_name:
-                            if col == cn[0]:
-                                col = cn
-                            else:
-                                col = (col, col)
-                        t = etree.SubElement(item, col[1])
-                        t.text = row[col[0]]
+                    self._make_tag_and_rename_it_inside_parent_from_row(row,
+                                                                 item, col_name)
             else:
                 p = etree.SubElement(item, parent)
                 if col_name is None:
-                    for col in row:
-                        t = etree.SubElement(p, col)
-                        t.text = row[col]
+                    self._make_tag_with_parent_from_row(row, p)
                 else:
-                    for col in row:
-                        for cn in col_name:
-                            if col == cn[0]:
-                                col = cn
-                            else:
-                                col = (col, col)
-                        t = etree.SubElement(p, col[1])
-                        t.text = row[col[0]]
+                    self._make_tag_and_rename_it_inside_parent_from_row(row,
+                                                                    p, col_name)
 
         return item
+
+    def _make_tag_with_parent_from_row(self, row, parent):
+        """Membuat tag, didalam parent yang ditentukan oleh *parent*
+        dari *row* csv, DictReader objek"""
+        for col in row:
+            t = etree.SubElement(parent, col)
+            t.text = row[col]
+
+    def _make_tag_and_rename_it_inside_parent_from_row(self, row,
+                                                       parent, col_name):
+        """membuat tag, dengan nama yang diubah, didalam row objek DictReader,
+        col_name adalah list/tuple di dalam list/atau tuple, index 0 adalah
+        asli, index 1 adalah setelah diubah"""
+        
+        for col in row:
+            for cn in col_name:
+                if col == cn[0]:
+                    col = cn
+                else:
+                    col = (col, col)
+            t = etree.SubElement(parent, col[1])
+            t.text = row[col[0]]
