@@ -1,11 +1,12 @@
 import unittest
 from lxml import etree
 from io import StringIO
+from lxml_asserts.testcase import LxmlTestCaseMixin
 
 from mdb2kirtass.csv_to_xml import CsvtoXml
 
 
-class CsvtoXmlTestCase(unittest.TestCase):
+class CsvtoXmlTestCase(unittest.TestCase, LxmlTestCaseMixin):
 
     def original_csv_file(self):
         return StringIO("""bk,no,betaka,authno,cat
@@ -24,15 +25,15 @@ sidu,3,kertas putih,4,3""".strip())
         """header csv adalah tag, dan isi adalah text tanpa
         ada perubahan nama"""
         hasil = CsvtoXml(self.original_csv_file())
-        expected = """<item><bk>nama</bk><no>1</no><betaka>ini buku bagus</betaka><authno>1</authno><cat>1</cat>
+        expected = """<item><bk>nama</bk><no>1</no><betaka>ini buku bagus</betaka><authno>1</authno><cat>3</cat>
         <bk>munawir</bk><no>2</no><betaka>kamus indo arab</betaka><authno>2</authno><cat>4</cat>
         <bk>sidu</bk><no>3</no><betaka>kertas putih</betaka><authno>4</authno><cat>3</cat>
         </item>"""
-        expected_xml = etree.fromstring(expected)
-        self.assertEqual(etree.tostring(expected_xml),
-                        etree.tostring(hasil._make_xml_original()))
+        self.assertXmlEqual(expected,
+                    hasil._make_xml_original())
+        
 
     def test_get_headers(self):
         """Mendapatkan header csv"""
         hasil = CsvtoXml(self.original_csv_file())
-        self.assertEqual(hasil._get_header(), ['bk', 'no', 'betaka', 'authno', 'cat'])
+        self.assertEqual(hasil._get_header()[0], ['bk', 'no', 'betaka', 'authno', 'cat'])
