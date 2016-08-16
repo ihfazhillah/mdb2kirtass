@@ -25,7 +25,3 @@ class CsvtoXml(object):
                 t.text = row[col]
 
         return item
-
-    def _get_header(self):
-        csv_object = list(csv.reader(self.csv_file))
-        return csv_object
