@@ -32,8 +32,3 @@ sidu,3,kertas putih,4,3""".strip())
         self.assertXmlEqual(expected,
                     hasil._make_xml_original())
         
-
-    def test_get_headers(self):
-        """Mendapatkan header csv"""
-        hasil = CsvtoXml(self.original_csv_file())
-        self.assertEqual(hasil._get_header()[0], ['bk', 'no', 'betaka', 'authno', 'cat'])
