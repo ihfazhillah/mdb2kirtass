@@ -42,3 +42,14 @@ sidu,3,kertas putih,4,3""".strip())
         <book><bk>sidu</bk><no>3</no><betaka>kertas putih</betaka><authno>4</authno><cat>3</cat></book>
         </item>"""
         self.assertXmlEqual(expected, hasil)
+
+    def test_buat_xml_objek_dengan_custom_root(self):
+        """root selain item...."""
+        hasil = CsvtoXml(self.original_csv_file())._make_xml_original(root='custom',
+                                                                    parent='book')
+        expected = """<custom>
+        <book><bk>nama</bk><no>1</no><betaka>ini buku bagus</betaka><authno>1</authno><cat>3</cat></book>
+        <book><bk>munawir</bk><no>2</no><betaka>kamus indo arab</betaka><authno>2</authno><cat>4</cat></book>
+        <book><bk>sidu</bk><no>3</no><betaka>kertas putih</betaka><authno>4</authno><cat>3</cat></book>
+        </custom>"""
+        self.assertXmlEqual(expected, hasil)
