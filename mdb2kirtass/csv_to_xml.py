@@ -17,10 +17,12 @@ class CsvtoXml(object):
         """Fungsi untuk mengubah file csv ke objek DictCsvReader"""
         return csv.DictReader(self.csv_file)
 
-    def _make_xml(self, root='item', parent=None, col_name=None,
+    def _make_xml(self, root='item', parent=None, col_name=None, include=None,
                             as_attrib=False, tag=None):
         item = etree.Element(root)
         for row in self._dict_csv():
+            if include:
+                row = self._process_include(row, include)
             if tag is None:
                 if parent is None:
                     if col_name is None:
@@ -40,7 +42,6 @@ class CsvtoXml(object):
                     attrib = {k:row[k] for k in row}
                     etree.SubElement(item, tag, attrib)
                 else:
-
                     self._change_col_name(row, col_name)
                     attrib = {k:row[k] for k in row}
                     etree.SubElement(item, tag, attrib)
@@ -70,3 +71,6 @@ class CsvtoXml(object):
 
         for c in col_name:
             row[c[1]] = row.pop(c[0])
+
+    def _process_include(self, row, include):
+        return {key:row[key] for key in row if key in include}
