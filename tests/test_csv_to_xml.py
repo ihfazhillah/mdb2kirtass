@@ -82,3 +82,14 @@ sidu,3,kertas putih,4,3""".strip())
         <groupe bk='sidu' no='3' betaka='kertas putih' authno='4' cat='3'/>
         </item>"""
         self.assertXmlEqual(expected, hasil)
+
+    def test_buat_xml_objek_header_sebagai_attrib_dengan_diubah(self):
+        """Beberapa attrib diubah"""
+        hasil = CsvtoXml(self.original_csv_file())._make_xml(tag='groupe',
+                                    col_name=[('bk', 'title')], as_attrib=True)
+        expected = """<item>
+        <groupe title='nama' no='1' betaka='ini buku bagus' authno='1' cat='3'/>
+        <groupe title='munawir' no='2' betaka='kamus indo arab' authno='2' cat='4'/>
+        <groupe title='sidu' no='3' betaka='kertas putih' authno='4' cat='3'/>
+        </item>"""
+        self.assertXmlEqual(expected, hasil)

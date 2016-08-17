@@ -36,8 +36,15 @@ class CsvtoXml(object):
                         self._make_tag_and_rename_it_inside_parent_from_row(row,
                                                         p, col_name)
             else:
-                attrib = {k:row[k] for k in row}
-                etree.SubElement(item, tag, attrib)
+                if col_name is None:
+                    attrib = {k:row[k] for k in row}
+                    etree.SubElement(item, tag, attrib)
+                else:
+                    # http://stackoverflow.com/questions/4406501/change-the-name-of-a-key-in-dictionary
+                    for col in col_name:
+                        row[col[1]] = row.pop(col[0])
+                    attrib = {k:row[k] for k in row}
+                    etree.SubElement(item, tag, attrib)
 
         return item
 
