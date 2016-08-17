@@ -32,13 +32,7 @@ class CsvtoXml(object):
                     self._make_tag_with_parent_from_row(row, p, col_name)
 
             else:
-                if col_name is None:
-                    attrib = {k:row[k] for k in row}
-                    etree.SubElement(item, tag, attrib)
-                else:
-                    self._change_col_name(row, col_name)
-                    attrib = {k:row[k] for k in row}
-                    etree.SubElement(item, tag, attrib)
+                self._header_as_attrib(row, item, tag, col_name)
 
         return item
 
@@ -63,3 +57,14 @@ class CsvtoXml(object):
 
     def _process_include(self, row, include):
         return {key:row[key] for key in row if key in include}
+
+
+    def _header_as_attrib(self, row, item, tag, col_name):
+        """Menjadikan header csv sebagai attribut sebuah tag yang ditentukan
+        dengan item adalah root """
+
+        if col_name:
+            self._change_col_name(row, col_name)
+
+        attrib = {k:row[k] for k in row}
+        etree.SubElement(item, tag, attrib)
