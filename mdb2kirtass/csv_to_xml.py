@@ -40,9 +40,8 @@ class CsvtoXml(object):
                     attrib = {k:row[k] for k in row}
                     etree.SubElement(item, tag, attrib)
                 else:
-                    # http://stackoverflow.com/questions/4406501/change-the-name-of-a-key-in-dictionary
-                    for col in col_name:
-                        row[col[1]] = row.pop(col[0])
+
+                    self._change_col_name(row, col_name)
                     attrib = {k:row[k] for k in row}
                     etree.SubElement(item, tag, attrib)
 
@@ -60,10 +59,14 @@ class CsvtoXml(object):
         """membuat tag, dengan nama yang diubah, didalam row objek DictReader,
         col_name adalah list/tuple di dalam list/atau tuple, index 0 adalah
         asli, index 1 adalah setelah diubah"""
-
-        for c in col_name:
-            row[c[1]] = row.pop(c[0])
+        self._change_col_name(row, col_name)
 
         for col in row:
             t = etree.SubElement(parent, col)
             t.text = row[col]
+
+    def _change_col_name(self, row, col_name):
+        """http://stackoverflow.com/questions/4406501/change-the-name-of-a-key-in-dictionary"""
+
+        for c in col_name:
+            row[c[1]] = row.pop(c[0])
