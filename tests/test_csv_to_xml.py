@@ -96,10 +96,10 @@ sidu,3,kertas putih,4,3""".strip())
 
     def test_buat_xml_objek_header_sebagai_attrib_dipilih(self):
         hasil = CsvtoXml(self.original_csv_file())._make_xml(tag='groupe',
-                        include=['title', 'betaka'], col_name=[('bk', 'title')], as_attrib=True)
+                        include=['bk', 'betaka'], col_name=[('bk', 'title')], as_attrib=True)
         expected = """<item>
-        <groupe title='nama' no='1' betaka='ini buku bagus' />
-        <groupe title='munawir' no='2' betaka='kamus indo arab' />
-        <groupe title='sidu' no='3' betaka='kertas putih' />
+        <groupe title='nama' betaka='ini buku bagus' />
+        <groupe title='munawir'  betaka='kamus indo arab' />
+        <groupe title='sidu'  betaka='kertas putih' />
         </item>"""
         self.assertXmlEqual(expected, hasil)
