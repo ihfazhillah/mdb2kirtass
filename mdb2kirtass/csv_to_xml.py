@@ -26,18 +26,17 @@ class CsvtoXml(object):
 
             if tag is None and as_attrib is False:
                 if parent is None:
-                    self._make_tag_with_parent_from_row(row, item, col_name)
+                    self._header_as_tag(row, item, col_name)
                 else:
                     p = etree.SubElement(item, parent)
-                    self._make_tag_with_parent_from_row(row, p, col_name)
+                    self._header_as_tag(row, p, col_name)
 
             else:
                 self._header_as_attrib(row, item, tag, col_name)
 
         return item
 
-    def _make_tag_with_parent_from_row(self, row, parent, col_name,
-                                        as_attrib=False):
+    def _header_as_tag(self, row, parent, col_name):
         """Membuat tag, didalam parent yang ditentukan oleh *parent*
         dari *row* csv, DictReader objek"""
         if col_name:
