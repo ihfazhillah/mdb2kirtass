@@ -17,7 +17,7 @@ class CsvtoXml(object):
         """Fungsi untuk mengubah file csv ke objek DictCsvReader"""
         return csv.DictReader(self.csv_file)
 
-    def _make_xml_original(self, root='item', parent=None, col_name=None,
+    def _make_xml(self, root='item', parent=None, col_name=None,
                             as_attrib=False, tag=None):
         item = etree.Element(root)
         for row in self._dict_csv():
@@ -38,7 +38,7 @@ class CsvtoXml(object):
             else:
                 attrib = {k:row[k] for k in row}
                 etree.SubElement(item, tag, attrib)
-                
+
         return item
 
     def _make_tag_with_parent_from_row(self, row, parent, as_attrib=False):

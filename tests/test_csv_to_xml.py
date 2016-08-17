@@ -30,12 +30,12 @@ sidu,3,kertas putih,4,3""".strip())
         <bk>sidu</bk><no>3</no><betaka>kertas putih</betaka><authno>4</authno><cat>3</cat>
         </item>"""
         self.assertXmlEqual(expected,
-                    hasil._make_xml_original())
+                    hasil._make_xml())
 
     def test_buat_xml_objek_dengan_tag_header_setiap_row_dengan_parent(self):
         """header csv adalah tag, setiap baris ada tag parent, dengan root
         adalah item, tanpa ada perubahan nama"""
-        hasil = CsvtoXml(self.original_csv_file())._make_xml_original(parent='book')
+        hasil = CsvtoXml(self.original_csv_file())._make_xml(parent='book')
         expected = """<item>
         <book><bk>nama</bk><no>1</no><betaka>ini buku bagus</betaka><authno>1</authno><cat>3</cat></book>
         <book><bk>munawir</bk><no>2</no><betaka>kamus indo arab</betaka><authno>2</authno><cat>4</cat></book>
@@ -45,7 +45,7 @@ sidu,3,kertas putih,4,3""".strip())
 
     def test_buat_xml_objek_dengan_custom_root(self):
         """root selain item...."""
-        hasil = CsvtoXml(self.original_csv_file())._make_xml_original(root='custom',
+        hasil = CsvtoXml(self.original_csv_file())._make_xml(root='custom',
                                                                     parent='book')
         expected = """<custom>
         <book><bk>nama</bk><no>1</no><betaka>ini buku bagus</betaka><authno>1</authno><cat>3</cat></book>
@@ -55,7 +55,7 @@ sidu,3,kertas putih,4,3""".strip())
         self.assertXmlEqual(expected, hasil)
 
     def test_buat_xml_objek_tapi_colom_tag_diubah_satu(self):
-        hasil = CsvtoXml(self.original_csv_file())._make_xml_original(parent='book',
+        hasil = CsvtoXml(self.original_csv_file())._make_xml(parent='book',
                 col_name=[('bk', 'b')])
         expected = """<item>
         <book><b>nama</b><no>1</no><betaka>ini buku bagus</betaka><authno>1</authno><cat>3</cat></book>
@@ -65,7 +65,7 @@ sidu,3,kertas putih,4,3""".strip())
         self.assertXmlEqual(expected, hasil)
 
     def test_buat_xml_objek_tapi_colom_tag_diubah_satu_dengan_tanpa_parent(self):
-        hasil = CsvtoXml(self.original_csv_file())._make_xml_original(col_name=[('bk', 'b')])
+        hasil = CsvtoXml(self.original_csv_file())._make_xml(col_name=[('bk', 'b')])
         expected = """<item>
         <b>nama</b><no>1</no><betaka>ini buku bagus</betaka><authno>1</authno><cat>3</cat>
         <b>munawir</b><no>2</no><betaka>kamus indo arab</betaka><authno>2</authno><cat>4</cat>
@@ -74,7 +74,7 @@ sidu,3,kertas putih,4,3""".strip())
         self.assertXmlEqual(expected, hasil)
 
     def test_make_xml_objek_dengan_header_sebagai_attrib(self):
-        hasil = CsvtoXml(self.original_csv_file())._make_xml_original(tag='groupe',
+        hasil = CsvtoXml(self.original_csv_file())._make_xml(tag='groupe',
                                                                 as_attrib=True)
         expected = """<item>
         <groupe bk='nama' no='1' betaka='ini buku bagus' authno='1' cat='3'/>
