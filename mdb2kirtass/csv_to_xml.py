@@ -61,11 +61,9 @@ class CsvtoXml(object):
         col_name adalah list/tuple di dalam list/atau tuple, index 0 adalah
         asli, index 1 adalah setelah diubah"""
 
+        for c in col_name:
+            row[c[1]] = row.pop(c[0])
+
         for col in row:
-            for cn in col_name:
-                if col == cn[0]:
-                    col = cn
-                else:
-                    col = (col, col)
-            t = etree.SubElement(parent, col[1])
-            t.text = row[col[0]]
+            t = etree.SubElement(parent, col)
+            t.text = row[col]
