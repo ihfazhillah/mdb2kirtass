@@ -48,7 +48,7 @@ class MakeGroupTestCase(unittest.TestCase, LxmlTestCaseMixin):
                 </Item>
             </root>
             <root Name='كتب الشاملة' id='sb' />
-            <root Name='1كتب الشاملة' id='sb1' />
+            <root Name='كتب الشاملة1' id='sb1'/>
         </setting>
         """
         self.assertXmlEqual(expected, tree2)
