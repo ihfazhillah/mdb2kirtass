@@ -35,3 +35,20 @@ class MakeGroupTestCase(unittest.TestCase, LxmlTestCaseMixin):
         </setting>
         """
         self.assertXmlEqual(expected, add_root)
+
+    def test_kutub_shamela_found_once(self):
+        group = MakeGroup()
+        tree = group.add_root(tree=self.original_group_etree())
+        tree2 = group.add_root(tree=tree)
+        expected = """
+        <setting>
+            <root Name='abc' id='1'>
+                <Item Name='def' id='1'>
+                    <bk />
+                </Item>
+            </root>
+            <root Name='كتب الشاملة' id='sb' />
+            <root Name='1كتب الشاملة' id='sb1' />
+        </setting>
+        """
+        self.assertXmlEqual(expected, tree2)
