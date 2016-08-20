@@ -98,4 +98,5 @@ class MakeGroupTestCase(unittest.TestCase, LxmlTestCaseMixin):
             </root>
         </setting>
         """
+        # self.fail(etree.tostring(items))
         self.assertXmlEqual(expected, items)
