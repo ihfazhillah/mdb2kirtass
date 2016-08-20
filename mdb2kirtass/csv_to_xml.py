@@ -30,13 +30,15 @@ class CsvtoXml(object):
                 else:
                     p = etree.SubElement(item, parent)
                     self._header_as_tag(row, p, col_name)
-            elif as_attrib and isinstance(parent, etree._Element):
-                item = parent
-                self._header_as_attrib(row, item, tag, col_name)
             else:
                 self._header_as_attrib(row, item, tag, col_name)
 
         return item
+
+    def _update_xml(self, tree_orig, tag, as_attrib, parent):
+        for row in self._dict_csv():
+            self._header_as_attrib(row, parent, tag)
+        return tree_orig
 
     def _header_as_tag(self, row, parent, col_name):
         """Membuat tag, didalam parent yang ditentukan oleh *parent*
@@ -60,7 +62,7 @@ class CsvtoXml(object):
         return {key:row[key] for key in row if key in include}
 
 
-    def _header_as_attrib(self, row, item, tag, col_name):
+    def _header_as_attrib(self, row, item, tag, col_name=None):
         """Menjadikan header csv sebagai attribut sebuah tag yang ditentukan
         dengan item adalah root """
 
