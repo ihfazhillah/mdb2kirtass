@@ -103,3 +103,14 @@ sidu,3,kertas putih,4,3""".strip())
         <groupe title='sidu'  betaka='kertas putih' />
         </item>"""
         self.assertXmlEqual(expected, hasil)
+
+    def test_buat_xml_objek_header_attrib_parent_element_objek(self):
+        parent = etree.Element('parent')
+        csv = CsvtoXml(self.original_csv_file())
+        hasil = csv._make_xml(tag='groupe', as_attrib=True, parent=parent)
+        expected = """<parent>
+        <groupe bk='nama' no='1' betaka='ini buku bagus' authno='1' cat='3'/>
+        <groupe bk='munawir' no='2' betaka='kamus indo arab' authno='2' cat='4'/>
+        <groupe bk='sidu' no='3' betaka='kertas putih' authno='4' cat='3'/>
+        </parent>"""
+        self.assertXmlEqual(expected, hasil)
