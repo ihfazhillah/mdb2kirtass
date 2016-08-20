@@ -30,7 +30,9 @@ class CsvtoXml(object):
                 else:
                     p = etree.SubElement(item, parent)
                     self._header_as_tag(row, p, col_name)
-
+            elif as_attrib and isinstance(parent, etree._Element):
+                item = parent
+                self._header_as_attrib(row, item, tag, col_name)
             else:
                 self._header_as_attrib(row, item, tag, col_name)
 
@@ -66,4 +68,4 @@ class CsvtoXml(object):
             self._change_col_name(row, col_name)
 
         attrib = {k:row[k] for k in row}
-        etree.SubElement(item, tag, attrib)
+        return etree.SubElement(item, tag, attrib)
