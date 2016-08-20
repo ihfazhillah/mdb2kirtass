@@ -35,9 +35,13 @@ class CsvtoXml(object):
 
         return item
 
-    def _update_xml(self, tree_orig, tag, as_attrib, parent):
+    def _update_xml(self, tree_orig, tag, as_attrib, parent, include=None):
         for row in self._dict_csv():
-            self._header_as_attrib(row, parent, tag)
+            if include:
+                row = self._process_include(row, include)
+
+            if as_attrib:
+                self._header_as_attrib(row, parent, tag)
         return tree_orig
 
     def _header_as_tag(self, row, parent, col_name):
