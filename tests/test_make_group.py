@@ -1,6 +1,7 @@
 import unittest
 from lxml import etree
 from lxml_asserts.testcase import LxmlTestCaseMixin
+from io import StringIO
 
 from mdb2kirtass.group import MakeGroup
 
@@ -17,6 +18,12 @@ class MakeGroupTestCase(unittest.TestCase, LxmlTestCaseMixin):
             </root>
         </setting>
         """.strip()
+
+    def original_csv_bok(self):
+        return StringIO("""id,name,lvl
+1,shamela,3
+2,book,4
+3,buku,0""".strip())
 
     def original_group_etree(self):
         return etree.fromstring(self.original_group_string())
@@ -72,3 +79,23 @@ class MakeGroupTestCase(unittest.TestCase, LxmlTestCaseMixin):
         """
         # self.fail(etree.tostring(tree2))
         self.assertXmlEqual(expected, tree2)
+
+    def test_add_items(self):
+        group = MakeGroup()
+        tree = group.add_root(tree=self.original_group_etree())
+        items = group.add_item(tree=tree, csvobject=self.original_csv_file())
+        expected = """
+        <setting>
+            <root Name='abc' id='1'>
+                <Item Name='def' id='1'>
+                    <bk />
+                </Item>
+            </root>
+            <root Name='كتب الشاملة' id='sb' >
+                <Item Name='shamela' id='1'/>
+                <Item Name='book' id='2'/>
+                <Item Name='buku' id='3'/>
+            </root>
+        </setting>
+        """
+        self.assertXmlEqual(expected, items)
