@@ -169,3 +169,26 @@ sidu,3,kertas putih,4,3""".strip())
         </parent>"""
         # self.fail(etree.tostring(hasil))
         self.assertXmlEqual(expected, hasil)
+
+    def test_update_xml_objek_header_attrib_dengan_tambah_attrib(self):
+        xml = """<parent>
+            <root id='1'/>
+            <root id='2' />
+        </parent>
+        """
+        p = etree.fromstring(xml)
+        parent = p.findall('.//root')[1]
+        csv = CsvtoXml(self.original_csv_file())
+        hasil = csv._update_xml(tree_orig=p, tag='groupe',
+            as_attrib=True, parent=parent, include=['bk', 'no', 'betaka'],
+            col_name=[('bk', 'name')], cus_attr={'c':'b'})
+        expected = """<parent>
+        <root id='1' />
+        <root id='2'>
+        <groupe name='nama' no='1' betaka='ini buku bagus' c='b'/>
+        <groupe name='munawir' no='2' betaka='kamus indo arab' c='b'/>
+        <groupe name='sidu' no='3' betaka='kertas putih' c='b'/>
+        </root>
+        </parent>"""
+        # self.fail(etree.tostring(hasil))
+        self.assertXmlEqual(expected, hasil)
