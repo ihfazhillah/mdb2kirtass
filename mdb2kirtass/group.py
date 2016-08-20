@@ -4,7 +4,7 @@ from lxml import etree
 class MakeGroup():
 
     def add_root(self, tree):
-        root = [x for x in tree.findall(".//root") if x.attrib['id'].startswith('sb')]
+        root = tree.xpath(".//root[starts-with(@id, 'sb')]")
         if len(root) >= 1:
             count = len(root)
             id_ = 'sb%s' %(count)
