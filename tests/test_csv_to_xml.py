@@ -181,13 +181,14 @@ sidu,3,kertas putih,4,3""".strip())
         csv = CsvtoXml(self.original_csv_file())
         hasil = csv._update_xml(tree_orig=p, tag='groupe',
             as_attrib=True, parent=parent, include=['bk', 'no', 'betaka'],
-            col_name=[('bk', 'name')], cus_attr={'c':'b'})
+            col_name=[('bk', 'name')],
+            cus_attr=({'c':str(x)} for x in range(3)))
         expected = """<parent>
         <root id='1' />
         <root id='2'>
-        <groupe name='nama' no='1' betaka='ini buku bagus' c='b'/>
-        <groupe name='munawir' no='2' betaka='kamus indo arab' c='b'/>
-        <groupe name='sidu' no='3' betaka='kertas putih' c='b'/>
+        <groupe name='nama' no='1' betaka='ini buku bagus' c='0'/>
+        <groupe name='munawir' no='2' betaka='kamus indo arab' c='1'/>
+        <groupe name='sidu' no='3' betaka='kertas putih' c='2'/>
         </root>
         </parent>"""
         # self.fail(etree.tostring(hasil))

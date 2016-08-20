@@ -37,12 +37,21 @@ class CsvtoXml(object):
 
     def _update_xml(self, tree_orig, tag, as_attrib, parent, include=None,
                     col_name=None, cus_attr=None):
-        for row in self._dict_csv():
-            if include:
-                row = self._process_include(row, include)
 
-            if as_attrib:
-                self._header_as_attrib(row, parent, tag, col_name, cus_attr)
+        if cus_attr:
+            for row, ca in zip(self._dict_csv(), cus_attr):
+                if include:
+                    row = self._process_include(row, include)
+
+                if as_attrib:
+                    self._header_as_attrib(row, parent, tag, col_name, ca)
+        else:
+            for row in self._dict_csv():
+                if include:
+                    row = self._process_include(row, include)
+
+                if as_attrib:
+                    self._header_as_attrib(row, parent, tag, col_name)
         return tree_orig
 
     def _header_as_tag(self, row, parent, col_name):
@@ -75,7 +84,7 @@ class CsvtoXml(object):
             self._change_col_name(row, col_name)
 
         attrib = {k:row[k] for k in row}
-        
+
         if cus_attr:
             attrib.update(cus_attr)
 
