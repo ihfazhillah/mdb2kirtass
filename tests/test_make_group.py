@@ -2,6 +2,8 @@ import unittest
 from lxml import etree
 from lxml_asserts.testcase import LxmlTestCaseMixin
 
+from mdb2kirtass.group import MakeGroup
+
 
 class MakeGroupTestCase(unittest.TestCase, LxmlTestCaseMixin):
 
@@ -17,7 +19,7 @@ class MakeGroupTestCase(unittest.TestCase, LxmlTestCaseMixin):
         """.strip()
 
     def original_group_etree(self):
-        return etree.Element(self.original_group_string())
+        return etree.fromstring(self.original_group_string())
 
     def test_kutub_shamela_not_found(self):
         group = MakeGroup()
