@@ -1,5 +1,6 @@
 from lxml import etree
 
+from mdb2kirtass.csv_to_xml import CsvtoXml
 
 class MakeGroup():
 
@@ -14,4 +15,11 @@ class MakeGroup():
             etree.SubElement(tree, "root",
             {'Name': 'كتب الشاملة', 'id': 'sb'})
 
+        return tree
+
+    def add_item(self, tree, csvobject):
+        csv = CsvtoXml(csvobject)
+        root = tree.xpath(".//root[starts-with(@id, 'sb')]")[-1]
+        tree = csv._update_xml(tree_orig=tree, as_attrib=True, parent=root,
+            tag='Item', include=['id', 'name'], col_name=[('name', 'Name')])
         return tree
