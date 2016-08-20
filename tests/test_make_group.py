@@ -15,3 +15,8 @@ class MakeGroupTestCase(unittests.TestCase, LxmlTestCaseMixin):
             </root>
         </setting>
         """.strip()
+
+    def original_group_etree(self):
+        return etree.Element(self.original_group_string())
+
+    
