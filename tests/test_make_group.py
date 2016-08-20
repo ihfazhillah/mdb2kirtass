@@ -83,7 +83,7 @@ class MakeGroupTestCase(unittest.TestCase, LxmlTestCaseMixin):
     def test_add_items(self):
         group = MakeGroup()
         tree = group.add_root(tree=self.original_group_etree())
-        items = group.add_item(tree=tree, csvobject=self.original_csv_file())
+        items = group.add_item(tree=tree, csvobject=self.original_csv_bok())
         expected = """
         <setting>
             <root Name='abc' id='1'>
