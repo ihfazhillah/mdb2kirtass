@@ -104,8 +104,8 @@ class MakeGroupTestCase(unittest.TestCase, LxmlTestCaseMixin):
     def test_get_dict_authno_as_key_val_is_Lng(self):
         expected_dict = {1: 'bayu', 2: 'anggit'}
         auth_csv = StringIO("""authno,Lng,other
-        1,bayu,ksjflasf
-        2,anggit,ksjflakj
+1,bayu,ksjflasf
+2,anggit,ksjflakj
         """.strip())
         group = MakeGroup()
         hasil = group._auth_dict(auth_csv)
