@@ -229,5 +229,5 @@ sidu,3,kertas putih,4,3""".strip())
         </root>
         <root id='2'/>
         </parent>"""
-        self.fail(etree.tostring(hasil))
+        # self.fail(etree.tostring(hasil))
         self.assertXmlEqual(expected, hasil)

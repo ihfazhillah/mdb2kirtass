@@ -36,7 +36,8 @@ class CsvtoXml(object):
         return item
 
     def _update_xml(self, tree_orig, tag, as_attrib, parent, include=None,
-                    col_name=None, cus_attr=None):
+                    col_name=None, cus_attr=None,
+                    change_val=None):
 
         if cus_attr:
             for row, ca in zip(self._dict_csv(), cus_attr):
@@ -51,7 +52,7 @@ class CsvtoXml(object):
                     row = self._process_include(row, include)
 
                 if as_attrib:
-                    self._header_as_attrib(row, parent, tag, col_name)
+                    self._header_as_attrib(row, parent, tag, col_name, change_val=change_val)
         return tree_orig
 
     def _header_as_tag(self, row, parent, col_name):
@@ -76,16 +77,52 @@ class CsvtoXml(object):
         return {key:row[key] for key in row if key in include}
 
 
-    def _header_as_attrib(self, row, item, tag, col_name=None, cus_attr=None):
+    def _header_as_attrib(self, row, item, tag,
+                          col_name=None, cus_attr=None,
+                          change_val=None):
         """Menjadikan header csv sebagai attribut sebuah tag yang ditentukan
         dengan item adalah root """
 
         if col_name:
             self._change_col_name(row, col_name)
 
+        if change_val:
+            self._change_val(row, change_val)
         attrib = {k:row[k] for k in row}
 
         if cus_attr:
             attrib.update(cus_attr)
 
-        return etree.SubElement(item, tag, attrib)
+        etree.SubElement(item, tag, attrib)
+
+    def _change_val(self, row, change_val):
+        """chage_val harus berupa list didalam list, atau tuple didalam list,
+        contohnya adalah = [('authno', D)]
+        setiap list/tuple yang didalam harus hanya berjumlah 2.
+        index 0 adalah nama key dari row yang akan diganti valuenya.
+        index 1 adalah value dari value dari yang pertama.
+
+        dari data seperti ini:
+
+        dict_data = {1: 'abi',
+             2: 'saya',
+             3: 'kamu'}
+
+        asli = [{'nama':'ihfazh', 'status':'1'},
+                {'nama':'sakin', 'status':'2'},
+                {'nama':'fufu', 'status':'3'},
+                {'nama':'mumu', 'status':'1'},
+                {'nama':'maryam', 'status':'2'}]
+
+        expected = \"\"\"<root>
+        <data nama='ihfazh' status='abi' />
+        <data nama='sakin' status='saya' />
+        <data nama='fufu' status='kamu' />
+        <data nama='mumu' status='abi' />
+        <data nama='maryam' status='saya' />
+        </root>\"\"\"
+        """
+        for v in change_val:
+            row[v[0]] = v[1].get(int(row[v[0]]), '')
+
+        return row
