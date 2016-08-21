@@ -108,5 +108,5 @@ class MakeGroupTestCase(unittest.TestCase, LxmlTestCaseMixin):
         2,anggit,ksjflakj
         """.strip())
         group = MakeGroup()
-        hasil = group._auth_dict()
+        hasil = group._auth_dict(auth_csv)
         self.assertEqual(hasil, expected_dict)
