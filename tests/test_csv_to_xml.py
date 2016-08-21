@@ -193,3 +193,41 @@ sidu,3,kertas putih,4,3""".strip())
         </parent>"""
         # self.fail(etree.tostring(hasil))
         self.assertXmlEqual(expected, hasil)
+
+    def test_update_xml_objek_header_attrib_value_diganti(self):
+        """value dari attribut suatu tag adalah key dari sebuah dictionary,
+        dan akan diganti dengan value yang sesuai.
+
+        contoh value adalah : '1', '2', '3'
+        dan sebuah dictionary adalah : {'1': 'kamu', '2': 'aku', '3': 'dia'}
+
+        maka ketika value dari atribut sebuah tag adalah 1, maka akan diganti
+        menjadi 'kamu'
+        """
+        D = {1: 'bagus',
+             2: 'anang',
+             4: 'adit'}
+
+        xml = """<parent>
+            <root id='1'/>
+            <root id='2' />
+        </parent>
+        """
+        p = etree.fromstring(xml)
+        parent = p.findall('.//root')[0]
+        csv = CsvtoXml(self.original_csv_file())
+        hasil = csv._update_xml(tree_orig=p,
+                                tag='groupe',
+                                as_attrib=True,
+                                parent=parent,
+                                change_val=[('authno', D)])
+        expected = """<parent>
+        <root id='1'>
+        <groupe bk='nama' no='1' betaka='ini buku bagus' authno='bagus' cat='3'/>
+        <groupe bk='munawir' no='2' betaka='kamus indo arab' authno='anang' cat='4'/>
+        <groupe bk='sidu' no='3' betaka='kertas putih' authno='adit' cat='3'/>
+        </root>
+        <root id='2'/>
+        </parent>"""
+        self.fail(etree.tostring(hasil))
+        self.assertXmlEqual(expected, hasil)
