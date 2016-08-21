@@ -19,7 +19,7 @@ class MakeGroupTestCase(unittest.TestCase, LxmlTestCaseMixin):
         </setting>
         """.strip()
 
-    def original_csv_bok(self):
+    def original_csv_cat(self):
         return StringIO("""id,name,lvl
 1,shamela,3
 2,book,4
@@ -83,7 +83,7 @@ class MakeGroupTestCase(unittest.TestCase, LxmlTestCaseMixin):
     def test_add_items(self):
         group = MakeGroup()
         tree = group.add_root(tree=self.original_group_etree())
-        items = group.add_item(tree=tree, csvobject=self.original_csv_bok())
+        items = group.add_item(tree=tree, csvobject=self.original_csv_cat())
         expected = """
         <setting>
             <root Name='abc' id='1'>
