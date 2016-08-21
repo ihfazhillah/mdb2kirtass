@@ -27,4 +27,4 @@ class MakeGroup():
 
     def _auth_dict(self, csv_file):
         csvread = csv.DictReader(csv_file)
-        return {int(x['authno']): x['Lng'] for x in csvread}
+        return {int(x['authid']): x['Lng'] for x in csvread}
