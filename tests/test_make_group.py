@@ -100,3 +100,13 @@ class MakeGroupTestCase(unittest.TestCase, LxmlTestCaseMixin):
         """
         # self.fail(etree.tostring(items))
         self.assertXmlEqual(expected, items)
+
+    def test_get_dict_authno_as_key_val_is_Lng(self):
+        expected_dict = {1: 'bayu', 2: 'anggit'}
+        auth_csv = StringIO("""authno,Lng,other
+        1,bayu,ksjflasf
+        2,anggit,ksjflakj
+        """.strip())
+        group = MakeGroup()
+        hasil = group._auth_dict()
+        self.assertEqual(hasil, expected_dict)
