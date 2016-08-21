@@ -1,4 +1,5 @@
 from lxml import etree
+import csv
 
 from mdb2kirtass.csv_to_xml import CsvtoXml
 
@@ -23,3 +24,7 @@ class MakeGroup():
         tree = csv._update_xml(tree_orig=tree, as_attrib=True, parent=root,
             tag='Item', include=['id', 'name'], col_name=[('name', 'Name')])
         return tree
+
+    def _auth_dict(self, csv_file):
+        csvread = csv.DictReader(csv_file)
+        return {int(x['authno']): x['Lng'] for x in csvread}
