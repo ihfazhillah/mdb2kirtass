@@ -83,11 +83,11 @@ class CsvtoXml(object):
         """Menjadikan header csv sebagai attribut sebuah tag yang ditentukan
         dengan item adalah root """
 
+        if change_val:
+            self._change_val(row, change_val)
         if col_name:
             self._change_col_name(row, col_name)
 
-        if change_val:
-            self._change_val(row, change_val)
         attrib = {k:row[k] for k in row}
 
         if cus_attr:
