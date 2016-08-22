@@ -128,3 +128,12 @@ class MakeGroupTestCase(unittest.TestCase, LxmlTestCaseMixin):
         group.add_root(root)
         idroot = group.idroot
         self.assertEqual(idroot, 'sb1')
+
+    def test_idroot_bila_root_ketiga_sb2(self):
+        group = MakeGroup()
+        root = group.add_root(self.original_group_etree())
+        root1 = group.add_root(root)
+        group.add_root(root1)
+
+        idroot = group.idroot
+        self.assertEqual(idroot, 'sb2')
