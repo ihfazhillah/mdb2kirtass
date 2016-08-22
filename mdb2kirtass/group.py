@@ -16,8 +16,9 @@ class MakeGroup():
             name = 'كتب الشاملة%s' %(count)
             etree.SubElement(tree, "root", {"Name": name, 'id': id_})
         else:
-            etree.SubElement(tree, "root",
+            root = etree.SubElement(tree, "root",
             {'Name': 'كتب الشاملة', 'id': 'sb'})
+            self.idroot = root.attrib['id']
 
         return tree
 
