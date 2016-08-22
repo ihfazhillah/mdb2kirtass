@@ -5,6 +5,9 @@ from mdb2kirtass.csv_to_xml import CsvtoXml
 
 class MakeGroup():
 
+    def __init__(self):
+        self.idroot = None
+
     def add_root(self, tree):
         root = tree.xpath(".//root[starts-with(@id, 'sb')]")
         if len(root) >= 1:
