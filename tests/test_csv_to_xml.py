@@ -258,7 +258,7 @@ sidu,3,kertas putih,4,3""".strip())
                                 tag='groupe',
                                 as_attrib=True,
                                 parent=parent,
-                                change_col= [('authno', 'aut')],
+                                col_name= [('authno', 'aut')],
                                 change_val=[('authno', D)])
         expected = """<parent>
         <root id='1'>
