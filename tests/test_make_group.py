@@ -110,3 +110,8 @@ class MakeGroupTestCase(unittest.TestCase, LxmlTestCaseMixin):
         group = MakeGroup()
         hasil = group._auth_dict(auth_csv)
         self.assertEqual(hasil, expected_dict)
+
+    def test_default_idroot_is_None(self):
+        group = MakeGroup()
+        idroot = group.idroot
+        self.assertEqual(idroot, None)
